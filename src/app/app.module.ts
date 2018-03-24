@@ -61,6 +61,10 @@ import { LoginComponent } from './login/login.component';
         component: OrderSuccessComponent
       },
       {
+        path: 'my-orders',
+        component: MyOrdersComponent
+      },
+      {
         path: 'login',
         component: LoginComponent
       },
