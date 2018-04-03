@@ -20,7 +20,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ManageProductsComponent } from './admin/manage-products/manage-products.component';
 import { ManageOrdersComponent } from './admin/manage-orders/manage-orders.component';
 import { LoginComponent } from './login/login.component';
-
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -53,35 +54,43 @@ import { LoginComponent } from './login/login.component';
         component: ShoppingCartComponent
       },
       {
-        path: 'checkout',
-        component: CheckoutComponent
-      },
-      {
-        path: 'order-success',
-        component: OrderSuccessComponent
-      },
-      {
-        path: 'my-orders',
-        component: MyOrdersComponent
-      },
-      {
         path: 'login',
         component: LoginComponent
       },
       {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'order-success',
+        component: OrderSuccessComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'my-orders',
+        component: MyOrdersComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
         path: 'admin/products',
-        component: ManageProductsComponent
+        component: ManageProductsComponent,
+        canActivate: [ AuthGuard ]
       },
       {
         path: 'admin/orders',
-        component: ManageOrdersComponent
+        component: ManageOrdersComponent,
+        canActivate: [ AuthGuard ]
       },
     ]),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
